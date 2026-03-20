@@ -1,0 +1,29 @@
+# Expense Tracker App
+
+## Project Overview
+This is a cross-platform mobile application built with React Native and Expo. The main goal of this app is to help users keep track of their daily expenses easily. It was developed as a university project. We focused on keeping the code simple, readable, and functional.
+
+## Main Features
+- **User Accounts:** Users can create an account, sign in, and sign out using Firebase Authentication.
+- **Manage Expenses:** Users can add new expenses, view their transaction history, and edit or delete past entries. Deleted items are hidden from the user interface but kept securely in the database (soft delete).
+- **Dashboard:** A simple screen that shows the total balance and a summary of recent transactions.
+- **Light and Dark Theme:** The application automatically adapts its colors based on the operating system settings.
+- **Clear Error Messages:** If a user makes a mistake (for example, typing an invalid email or an incorrect password), the app shows easy-to-understand error alerts.
+
+## Technology Stack
+- **Framework:** React Native managed by Expo
+- **Language:** TypeScript 
+- **Database and Authentication:** Firebase
+
+## How to Run the App
+
+1. **Clone the repository to your computer:**
+   ```bash
+   git clone https://github.com/ibrahimekinci/expense-tracker-react-native-expo-firebase.git
+   cd expense-tracker-react-native-expo-firebase
+Install the required packages:
+Set up Firebase Environment Variables: We do not upload our database passwords to GitHub for security reasons. You must create a file named .env in the root folder and add your Firebase keys. You can check the config/firebaseConfig.dist.ts file to see exactly which keys are required.
+Example of what your .env file should look like:
+Start the application: Clear the cache and start the Expo server by running:
+License
+This project is licensed under the MIT License.  
