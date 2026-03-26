@@ -14,7 +14,7 @@ import { globalStyles } from '../constants/globalStyles';
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
+
   const [emailValidation, setEmailValidation] = useState<ValidationStates>(ValidationStates.None);
   const [passwordValidation, setPasswordValidation] = useState<ValidationStates>(ValidationStates.None);
   const [isFormValid, setIsFormValid] = useState(false);
@@ -49,9 +49,9 @@ export default function LoginScreen() {
   return (
     <ThemeView screenType="login" style={[globalStyles.container, styles.container]}>
       <SafeAreaView style={styles.safeArea}>
-        <Image style={styles.icon} source={require('../assets/icon.png')} />
+        <Image style={styles.icon} source={require('../assets/logo.png')} />
         <ThemeText type="title" style={styles.title}>Welcome Back</ThemeText>
-        
+
         <ThemeInput
           placeholder="Email Address"
           value={email}
@@ -60,7 +60,7 @@ export default function LoginScreen() {
           autoCapitalize="none"
           errorText={emailValidation === ValidationStates.Invalid ? VALIDATION_ERRORS.INVALID_EMAIL : undefined}
         />
-        
+
         <ThemeInput
           placeholder="Password"
           value={password}
@@ -68,7 +68,7 @@ export default function LoginScreen() {
           secureTextEntry
           errorText={passwordValidation === ValidationStates.Invalid ? VALIDATION_ERRORS.INVALID_PASSWORD : undefined}
         />
-        
+
         <ThemeButton
           title="Login"
           onPress={handleLogin}

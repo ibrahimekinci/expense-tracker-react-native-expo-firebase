@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Alert, SafeAreaView } from 'react-native';
+import { StyleSheet, Alert, SafeAreaView, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ThemeView } from '../components/ThemeView';
 import { ThemeText } from '../components/ThemeText';
@@ -15,7 +15,7 @@ export default function SignUpScreen() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  
+
   const [emailValidation, setEmailValidation] = useState<ValidationStates>(ValidationStates.None);
   const [passwordValidation, setPasswordValidation] = useState<ValidationStates>(ValidationStates.None);
   const [isFormValid, setIsFormValid] = useState(false);
@@ -52,8 +52,9 @@ export default function SignUpScreen() {
   return (
     <ThemeView screenType="signUp" style={[globalStyles.container, styles.container]}>
       <SafeAreaView style={styles.safeArea}>
+        <Image style={styles.icon} source={require('../assets/logo.png')} />
         <ThemeText type="title" style={styles.title}>Create Account</ThemeText>
-        
+
         <ThemeInput
           placeholder="Full Name"
           value={fullName}
@@ -61,7 +62,7 @@ export default function SignUpScreen() {
           autoCapitalize="words"
           errorText={fullName.trim().length === 0 && fullName !== '' ? VALIDATION_ERRORS.REQUIRED_FULL_NAME : undefined}
         />
-        
+
         <ThemeInput
           placeholder="Email Address"
           value={email}
@@ -70,7 +71,7 @@ export default function SignUpScreen() {
           autoCapitalize="none"
           errorText={emailValidation === ValidationStates.Invalid ? VALIDATION_ERRORS.INVALID_EMAIL : undefined}
         />
-        
+
         <ThemeInput
           placeholder="Password"
           value={password}
@@ -78,7 +79,7 @@ export default function SignUpScreen() {
           secureTextEntry
           errorText={passwordValidation === ValidationStates.Invalid ? VALIDATION_ERRORS.INVALID_PASSWORD : undefined}
         />
-        
+
         <ThemeButton
           title="Sign Up"
           onPress={handleSignUp}
@@ -104,6 +105,13 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     width: '100%',
+  },
+  icon: {
+    width: 100,
+    height: 100,
+    alignSelf: 'center',
+    marginBottom: 20,
+    resizeMode: 'contain',
   },
   title: {
     marginBottom: 30,
