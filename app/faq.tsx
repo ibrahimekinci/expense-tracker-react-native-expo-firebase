@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, ScrollView, View } from 'react-native';
 import { ThemeView } from '../components/ThemeView';
 import { ThemeText } from '../components/ThemeText';
+import { globalStyles } from '../constants/globalStyles';
 
 const FAQS = [
   { q: "How do I edit an expense?", a: "Navigate to the History tab, locate the expense you wish to edit, and tap the 'Edit' button. You will be redirected to the Add/Edit form with the pre-filled data." },
@@ -13,8 +14,8 @@ const FAQS = [
 
 export default function FaqScreen() {
   return (
-    <ThemeView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+    <ThemeView style={globalStyles.container}>
+      <ScrollView contentContainerStyle={globalStyles.scrollContent}>
         <ThemeText type="title" style={styles.title}>Frequently Asked Questions</ThemeText>
         
         {FAQS.map((item, index) => (
@@ -29,8 +30,6 @@ export default function FaqScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  scrollContent: { padding: 20 },
   title: { textAlign: 'center', marginBottom: 30 },
   item: {
     backgroundColor: 'rgba(0, 0, 0, 0.02)',

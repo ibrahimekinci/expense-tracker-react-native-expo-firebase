@@ -31,7 +31,6 @@ export function useExpenseDb() {
       const q = query(
         collection(db, 'expense_tracker_expenses'),
         where('userId', '==', auth.currentUser.uid),
-        // Fetch user's active records
         where('isDeleted', '==', false)
       );
       const querySnapshot = await getDocs(q);
@@ -114,7 +113,6 @@ export function useExpenseDb() {
       };
       await updateDoc(docRef, deletePayload);
       
-      // Remove locally
       setExpenses((prev) => prev.filter((exp) => exp.id !== id));
     } catch (err: any) {
       console.error('useExpenseDb.softDeleteExpense error:', err);

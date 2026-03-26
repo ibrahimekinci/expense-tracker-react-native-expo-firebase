@@ -9,6 +9,7 @@ import { useFirebaseAuth } from '../hooks/useFirebaseAuth';
 import { ValidationStates } from '../interfaces/ValidationStates';
 import { VALIDATION_ERRORS } from '../constants/errorMessages';
 import { UI_MESSAGES } from '../constants/uiMessages';
+import { globalStyles } from '../constants/globalStyles';
 
 export default function SignUpScreen() {
   const [fullName, setFullName] = useState('');
@@ -29,7 +30,6 @@ export default function SignUpScreen() {
     setPasswordValidation(password ? (password.length > 8 ? ValidationStates.Valid : ValidationStates.Invalid) : ValidationStates.None);
   }, [email, password]);
 
-  // Update form validity
   useEffect(() => {
     setIsFormValid(
       fullName.trim().length > 0 &&
@@ -50,7 +50,7 @@ export default function SignUpScreen() {
   };
 
   return (
-    <ThemeView screenType="signUp" style={styles.container}>
+    <ThemeView screenType="signUp" style={[globalStyles.container, styles.container]}>
       <SafeAreaView style={styles.safeArea}>
         <ThemeText type="title" style={styles.title}>Create Account</ThemeText>
         
@@ -99,7 +99,6 @@ export default function SignUpScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     paddingHorizontal: 20,
     justifyContent: 'center',
   },

@@ -2,10 +2,11 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ThemeView } from '../components/ThemeView';
 import { ThemeText } from '../components/ThemeText';
+import { globalStyles } from '../constants/globalStyles';
 
 export default function SupportScreen() {
   return (
-    <ThemeView style={styles.container}>
+    <ThemeView style={globalStyles.containerWithPadding}>
       <ThemeText type="title" style={styles.title}>Contact Support</ThemeText>
       
       <View style={styles.card}>
@@ -27,7 +28,6 @@ export default function SupportScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
   title: { textAlign: 'center', marginBottom: 30 },
   card: {
     backgroundColor: 'rgba(0, 0, 0, 0.05)',

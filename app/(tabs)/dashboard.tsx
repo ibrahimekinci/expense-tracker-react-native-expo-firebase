@@ -6,6 +6,7 @@ import { ThemeText } from '../../components/ThemeText';
 import { useExpenseDb } from '../../hooks/useExpenseDb';
 import { useFirebaseAuth } from '../../hooks/useFirebaseAuth';
 import { ExpenseCategory } from '../../interfaces/ExpenseCategory';
+import { globalStyles } from '../../constants/globalStyles';
 
 export default function DashboardScreen() {
   const { expenses, isLoading, error, fetchExpenses } = useExpenseDb();
@@ -31,15 +32,15 @@ export default function DashboardScreen() {
   }, [expenses]);
 
   return (
-    <ThemeView screenType="mainTabs" style={styles.container}>
+    <ThemeView screenType="mainTabs" style={globalStyles.container}>
       <ScrollView 
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={globalStyles.scrollContent}
         refreshControl={<RefreshControl refreshing={isLoading} onRefresh={fetchExpenses} />}
       >
         <ThemeText style={styles.welcomeText}>Hello, {displayName}!</ThemeText>
         <ThemeText type="title" style={styles.headerTitle}>Overview</ThemeText>
         
-        {error ? <ThemeText type="error" style={styles.errorText}>{error}</ThemeText> : null}
+        {error ? <ThemeText type="error" style={globalStyles.errorText}>{error}</ThemeText> : null}
         
         <View style={styles.summaryCard}>
           <ThemeText type="subtitle" style={styles.cardSubtitle}>Total Expenses</ThemeText>
@@ -66,11 +67,8 @@ export default function DashboardScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  scrollContent: { padding: 20 },
   welcomeText: { color: 'rgba(255, 255, 255, 0.7)', fontSize: 16, marginBottom: 4 },
   headerTitle: { color: '#FFF', marginBottom: 20 },
-  errorText: { marginBottom: 10, backgroundColor: '#FFF', padding: 10, borderRadius: 8 },
   summaryCard: {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
     padding: 24,

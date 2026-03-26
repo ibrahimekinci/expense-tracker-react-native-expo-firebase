@@ -27,3 +27,6 @@ Example of what your .env file should look like:
 Start the application: Clear the cache and start the Expo server by running:
 License
 This project is licensed under the MIT License.  
+
+2. **Run the project:**
+npm run android -- -c 

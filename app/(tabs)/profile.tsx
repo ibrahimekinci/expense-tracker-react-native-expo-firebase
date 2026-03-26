@@ -6,6 +6,7 @@ import { ThemeText } from '../../components/ThemeText';
 import { ThemeButton } from '../../components/ThemeButton';
 import { useFirebaseAuth } from '../../hooks/useFirebaseAuth';
 import { UI_MESSAGES } from '../../constants/uiMessages';
+import { globalStyles } from '../../constants/globalStyles';
 
 export default function ProfileScreen() {
   const { auth, signOut, isLoading } = useFirebaseAuth();
@@ -41,7 +42,7 @@ export default function ProfileScreen() {
   };
 
   return (
-    <ThemeView screenType="mainTabs" style={styles.container}>
+    <ThemeView screenType="mainTabs" style={globalStyles.containerWithPadding}>
       <ThemeText type="title" style={styles.title}>Account Dashboard</ThemeText>
 
       <View style={styles.section}>
@@ -86,7 +87,6 @@ export default function ProfileScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
   title: { color: '#FFF', marginBottom: 30, textAlign: 'center' },
   section: { marginBottom: 24 },
   label: { color: 'rgba(255, 255, 255, 0.7)', marginBottom: 8, fontSize: 14 },

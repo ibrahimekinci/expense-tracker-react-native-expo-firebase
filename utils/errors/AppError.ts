@@ -15,7 +15,6 @@ export class AppError extends Error {
     this.errorCode = errorCode;
     this.isOperational = isOperational;
 
-    // Restore prototype chain
     Object.setPrototypeOf(this, new.target.prototype);
   }
 }

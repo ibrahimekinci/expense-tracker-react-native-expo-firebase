@@ -12,6 +12,7 @@ import { ValidationError } from '../../utils/errors/ValidationError';
 import { ErrorHandler } from '../../utils/ErrorHandler';
 import { VALIDATION_ERRORS } from '../../constants/errorMessages';
 import { UI_MESSAGES } from '../../constants/uiMessages';
+import { globalStyles } from '../../constants/globalStyles';
 
 export default function AddEditScreen() {
   const router = useRouter();
@@ -87,8 +88,8 @@ export default function AddEditScreen() {
   };
 
   return (
-    <ThemeView screenType="mainTabs" style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+    <ThemeView screenType="mainTabs" style={globalStyles.container}>
+      <ScrollView contentContainerStyle={globalStyles.scrollContent}>
         <ThemeText type="title" style={styles.title}>
           {isEditing ? 'Edit Expense' : 'Add New Expense'}
         </ThemeText>
@@ -144,8 +145,6 @@ export default function AddEditScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  scrollContent: { padding: 20 },
   title: { color: '#FFF', marginBottom: 30, textAlign: 'center' },
   categoryContainer: { marginBottom: 20 },
   categoryLabel: { color: '#FFF', marginBottom: 10, fontWeight: '600' },

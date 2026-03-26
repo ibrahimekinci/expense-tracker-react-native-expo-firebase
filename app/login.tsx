@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Alert, SafeAreaView } from 'react-native';
+import { StyleSheet, Alert, SafeAreaView, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ThemeView } from '../components/ThemeView';
 import { ThemeText } from '../components/ThemeText';
@@ -9,6 +9,7 @@ import { useFirebaseAuth } from '../hooks/useFirebaseAuth';
 import { ValidationStates } from '../interfaces/ValidationStates';
 import { VALIDATION_ERRORS } from '../constants/errorMessages';
 import { UI_MESSAGES } from '../constants/uiMessages';
+import { globalStyles } from '../constants/globalStyles';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -28,7 +29,6 @@ export default function LoginScreen() {
     setPasswordValidation(password ? (password.length > 8 ? ValidationStates.Valid : ValidationStates.Invalid) : ValidationStates.None);
   }, [email, password]);
 
-  // Update form validity
   useEffect(() => {
     setIsFormValid(
       emailValidation === ValidationStates.Valid &&
@@ -47,8 +47,9 @@ export default function LoginScreen() {
   };
 
   return (
-    <ThemeView screenType="login" style={styles.container}>
+    <ThemeView screenType="login" style={[globalStyles.container, styles.container]}>
       <SafeAreaView style={styles.safeArea}>
+        <Image style={styles.icon} source={require('../assets/icon.png')} />
         <ThemeText type="title" style={styles.title}>Welcome Back</ThemeText>
         
         <ThemeInput
@@ -88,12 +89,18 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     paddingHorizontal: 20,
     justifyContent: 'center',
   },
   safeArea: {
     width: '100%',
+  },
+  icon: {
+    width: 100,
+    height: 100,
+    alignSelf: 'center',
+    marginBottom: 20,
+    resizeMode: 'contain',
   },
   title: {
     marginBottom: 30,

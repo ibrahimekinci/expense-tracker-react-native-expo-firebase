@@ -8,6 +8,7 @@ import { ThemeButton } from '../components/ThemeButton';
 import { ThemeInput } from '../components/ThemeInput';
 import { useFirebaseAuth } from '../hooks/useFirebaseAuth';
 import { UI_MESSAGES } from '../constants/uiMessages';
+import { globalStyles } from '../constants/globalStyles';
 
 export default function EditProfileScreen() {
   const { auth } = useFirebaseAuth();
@@ -53,7 +54,7 @@ export default function EditProfileScreen() {
   };
 
   return (
-    <ThemeView screenType="mainTabs" style={styles.container}>
+    <ThemeView screenType="mainTabs" style={globalStyles.containerWithPadding}>
       <ThemeText type="title" style={styles.title}>Edit Profile</ThemeText>
 
       <View style={styles.section}>
@@ -85,7 +86,6 @@ export default function EditProfileScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
   title: { color: '#FFF', marginBottom: 30, textAlign: 'center' },
   section: { marginBottom: 24 },
   label: { color: 'rgba(255, 255, 255, 0.7)', marginBottom: 8, fontSize: 14 },

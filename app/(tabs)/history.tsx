@@ -6,6 +6,7 @@ import { ThemeText } from '../../components/ThemeText';
 import { ThemeButton } from '../../components/ThemeButton';
 import { useExpenseDb } from '../../hooks/useExpenseDb';
 import { UI_MESSAGES } from '../../constants/uiMessages';
+import { globalStyles } from '../../constants/globalStyles';
 
 export default function HistoryScreen() {
   const router = useRouter();
@@ -40,14 +41,14 @@ export default function HistoryScreen() {
   };
 
   return (
-    <ThemeView screenType="mainTabs" style={styles.container}>
+    <ThemeView screenType="mainTabs" style={globalStyles.container}>
       <ScrollView 
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={globalStyles.scrollContent}
         refreshControl={<RefreshControl refreshing={isLoading} onRefresh={fetchExpenses} />}
       >
         <ThemeText type="title" style={styles.title}>Expense History</ThemeText>
         
-        {error ? <ThemeText type="error" style={styles.errorText}>{error}</ThemeText> : null}
+        {error ? <ThemeText type="error" style={globalStyles.errorText}>{error}</ThemeText> : null}
 
         {expenses.length === 0 && !isLoading ? (
           <ThemeText style={styles.emptyText}>No expenses found.</ThemeText>
@@ -83,10 +84,7 @@ export default function HistoryScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  scrollContent: { padding: 20 },
   title: { color: '#FFF', marginBottom: 20 },
-  errorText: { marginBottom: 10, backgroundColor: '#FFF', padding: 10, borderRadius: 8 },
   emptyText: { color: 'rgba(255, 255, 255, 0.6)', fontStyle: 'italic', textAlign: 'center', marginTop: 20 },
   card: {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',

@@ -4,6 +4,7 @@ import { useRouter } from 'expo-router';
 import { useFirebaseAuth } from '../hooks/useFirebaseAuth';
 import { ThemeView } from '../components/ThemeView';
 import { ThemeText } from '../components/ThemeText';
+import { globalStyles } from '../constants/globalStyles';
 
 export default function SplashScreen() {
   const { auth } = useFirebaseAuth();
@@ -16,13 +17,13 @@ export default function SplashScreen() {
       } else {
         router.replace('/login');
       }
-    }, 1500); // Splash screen delay
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, [auth.currentUser, router]);
 
   return (
-    <ThemeView screenType="splash" style={styles.container}>
+    <ThemeView screenType="splash" style={[globalStyles.container, styles.container]}>
       <ThemeText type="title" style={styles.title}>Expense Tracker</ThemeText>
       <ActivityIndicator size="large" color="#FFFFFF" />
     </ThemeView>
@@ -31,7 +32,6 @@ export default function SplashScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
