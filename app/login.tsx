@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Alert, SafeAreaView, Image } from 'react-native';
+import { StyleSheet, Alert, SafeAreaView, Image, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ThemeView } from '../components/ThemeView';
 import { ThemeText } from '../components/ThemeText';
@@ -61,13 +61,34 @@ export default function LoginScreen() {
           errorText={emailValidation === ValidationStates.Invalid ? VALIDATION_ERRORS.INVALID_EMAIL : undefined}
         />
 
-        <ThemeInput
-          placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-          errorText={passwordValidation === ValidationStates.Invalid ? VALIDATION_ERRORS.INVALID_PASSWORD : undefined}
-        />
+        <View style={{ marginTop: 10, position: 'relative' }}>
+          <ThemeText
+            style={{
+              color: '#FFFFFF',
+              alignSelf: 'flex-end',
+              fontSize: 12,
+              fontWeight: 'bold',
+              marginBottom: 5,
+              marginRight: 0,
+              paddingVertical: 10,
+              paddingLeft: 20,
+            }}
+            onPress={() => {
+              console.log('Forgot password pressed');
+              Alert.alert("Reset Password", "A reset link has beensent to your email.");
+            }}
+          >
+            FORGOT?
+          </ThemeText>
+
+          <ThemeInput
+            placeholder="Password"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            errorText={passwordValidation === ValidationStates.Invalid ? VALIDATION_ERRORS.INVALID_PASSWORD : undefined}
+          />
+        </View>
 
         <ThemeButton
           title="Login"
@@ -77,7 +98,7 @@ export default function LoginScreen() {
         />
 
         <ThemeButton
-          title="New user? Sign Up here"
+          title="Don't have an account? Sign Up"
           variant="secondary"
           onPress={() => router.push('/signup')}
           style={styles.signupBtn}
@@ -89,11 +110,12 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 30,
     justifyContent: 'center',
   },
   safeArea: {
     width: '100%',
+    paddingTop: 40,
   },
   icon: {
     width: 100,
@@ -103,12 +125,15 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   title: {
-    marginBottom: 30,
+    fontSize: 42,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    marginBottom: 50,
     textAlign: 'center',
-    color: '#FFF',
+    lineHeight: 45,
   },
   signupBtn: {
-    marginTop: 10,
+    marginTop: 20,
     backgroundColor: 'transparent',
   }
 });
