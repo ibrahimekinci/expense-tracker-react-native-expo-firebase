@@ -187,8 +187,8 @@ const styles = StyleSheet.create({
   inputLabel: { color: '#B2BABB', fontSize: 11, fontWeight: '900', marginBottom: 10, letterSpacing: 1.5 },
   
   amountRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 15, borderBottomWidth: 1, borderBottomColor: '#EEE', width: '100%' },
-  currencySymbol: { fontSize: 35, fontWeight: 'bold', color: '#1A1A1A', marginRight: 8 },
-  amountInput: { backgroundColor: 'transparent', borderWidth: 0, fontSize: 30, fontWeight: 'bold', color: '#1A1A1A', height: 50, width: 200, paddingHorizontal: 0 },
+  currencySymbol: { fontSize: 35, height: 50, lineHeight: 50, includeFontPadding: false, fontWeight: 'bold', color: '#1A1A1A', marginRight: 8, alignSelf: 'center' },
+  amountInput: { backgroundColor: 'transparent', borderWidth: 0, fontSize: 30, fontWeight: 'bold', color: '#1A1A1A', height: 50,paddingTop:10, width: 200, paddingHorizontal: 0, paddingVertical: 0, textAlignVertical: 'center' },
   buttonRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: 20 },
   catBtn: { width: 'auto', paddingHorizontal: 15, marginVertical: 0 },
 
