@@ -49,7 +49,7 @@ export default function DashboardScreen() {
       color: COLORS[cat.toLowerCase() as keyof typeof COLORS] || '#3BABD7',
       text: cat
     }));
-    return data.length > 0 ? data : [{ value: 1, color: '#EEEEEE' }]; //Fallback for empty data
+    return data.length > 0 ? data : [{ value: 1, color: '#EEEEEE' }]; 
   }, [categoryBreakdown]);
 
   return (
@@ -75,9 +75,6 @@ export default function DashboardScreen() {
               radius={90}
               innerRadius={60}
               innerCircleColor={isDarkMode ? '#1E1E1E' : '#FFFFFF'}
-              centerLabelComponent={() => (
-                <Text style={{fontSize: 12, fontWeight: 'bold'}}>Expenses</Text>
-              )}
             />
           </View>
 
@@ -170,6 +167,6 @@ const styles = StyleSheet.create({
   categoryName: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#1A1A1A', //Dark text for white background
+    color: '#1A1A1A', 
   },
 });
