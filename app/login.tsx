@@ -61,26 +61,7 @@ export default function LoginScreen() {
           errorText={emailValidation === ValidationStates.Invalid ? VALIDATION_ERRORS.INVALID_EMAIL : undefined}
         />
 
-        <View style={{ marginTop: 10, position: 'relative' }}>
-          <ThemeText
-            style={{
-              color: '#FFFFFF',
-              alignSelf: 'flex-end',
-              fontSize: 12,
-              fontWeight: 'bold',
-              marginBottom: 5,
-              marginRight: 0,
-              paddingVertical: 10,
-              paddingLeft: 20,
-            }}
-            onPress={() => {
-              console.log('Forgot password pressed');
-              Alert.alert("Reset Password", "A reset link has beensent to your email.");
-            }}
-          >
-            FORGOT?
-          </ThemeText>
-
+        <View style={{ marginTop: 10 }}>
           <ThemeInput
             placeholder="Password"
             value={password}

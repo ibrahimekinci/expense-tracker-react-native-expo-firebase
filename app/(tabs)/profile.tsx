@@ -8,7 +8,6 @@ import { useFirebaseAuth } from '../../hooks/useFirebaseAuth';
 import { UI_MESSAGES } from '../../constants/uiMessages';
 import { globalStyles } from '../../constants/globalStyles';
 import { Ionicons } from '@expo/vector-icons';
-import { sendPasswordResetEmail } from 'firebase/auth';
 
 export default function ProfileScreen() {
   const { auth, signOut, isLoading } = useFirebaseAuth();
@@ -35,25 +34,6 @@ export default function ProfileScreen() {
       }
     }, [auth.currentUser])
   );
-
-  const handlePasswordReset = async () => {
-  if (auth.currentUser?.email) {
-    try {
-      //This tells Firebase to send the official reset email
-      await sendPasswordResetEmail(auth, auth.currentUser.email);
-
-      Alert.alert(
-        "Email Sent", 
-        "Please check your inbox (and spam folder) for the reset link."
-      );
-    } catch (error: any) {
-      console.warn('Reset error:', error);
-      Alert.alert("Error", error.message);
-    }
-  } else {
-    Alert.alert("Error", "User email not found.");
-  }
-};
 
   const handleSignOut = async () => {
     try {
@@ -103,17 +83,14 @@ export default function ProfileScreen() {
                 <View style={styles.underline} />
               </View>
 
-              <TouchableOpacity style={styles.infoRow} onPress={handlePasswordReset}>
-                <ThemeText style={styles.infoLabel}>PASSWORD</ThemeText>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 5 }}>
-                  <ThemeText style={styles.infoValue}>*************</ThemeText>
-                  <Ionicons name="mail-outline" size={18} color="rgba(255,255,255,0.4)" />
-                </View>
-                <View style={styles.underline} />
-                <ThemeText style={{ fontSize: 10, color: 'rgba(255,255,255,0.3)', marginTop: 8 }}>
-                  Tap to send reset link to your email
-                </ThemeText>
-              </TouchableOpacity>
+            <View style={styles.infoRow}>
+              <ThemeText style={styles.infoLabel}>PASSWORD</ThemeText>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 5 }}>
+                <ThemeText style={styles.infoValue}>*************</ThemeText>
+                <Ionicons name="lock-closed-outline" size={18} color="rgba(255,255,255,0.4)" />
+              </View>
+              <View style={styles.underline} />
+            </View>
             </View>
 
             <View style={[styles.card, { marginTop: 20 }]}>
