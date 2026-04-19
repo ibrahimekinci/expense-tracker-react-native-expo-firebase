@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, ScrollView, Alert } from 'react-native';
+import { StyleSheet, View, ScrollView, Alert, Platform, TouchableOpacity } from 'react-native';
 import { useLocalSearchParams, useRouter, useFocusEffect } from 'expo-router';
 import { ThemeView } from '../../components/ThemeView';
 import { ThemeText } from '../../components/ThemeText';
@@ -13,6 +13,7 @@ import { ErrorHandler } from '../../utils/ErrorHandler';
 import { VALIDATION_ERRORS } from '../../constants/errorMessages';
 import { UI_MESSAGES } from '../../constants/uiMessages';
 import { globalStyles } from '../../constants/globalStyles';
+import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 
 export default function AddEditScreen() {
   const router = useRouter();
@@ -24,7 +25,9 @@ export default function AddEditScreen() {
 
   const [amountStr, setAmountStr] = useState('');
   const [category, setCategory] = useState<ExpenseCategory>(ExpenseCategory.OTHER);
-  const [dateStr, setDateStr] = useState('');
+  const [date, setDate] = useState(new Date());
+  const [note, setNote] = useState(''); //New Note state
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -33,45 +36,44 @@ export default function AddEditScreen() {
         if (expenseToEdit) {
           setAmountStr(expenseToEdit.amount.toString());
           setCategory(expenseToEdit.category);
-          setDateStr(expenseToEdit.date);
+          setDate(new Date(expenseToEdit.date));
+          setNote((expenseToEdit as any).note || '');
         }
-      } else {
+      } 
+      else {
         setAmountStr('');
         setCategory(ExpenseCategory.OTHER);
-        setDateStr(new Date().toISOString().split('T')[0]);
+        setDate(new Date());
+        setNote('');
       }
     }, [params.id, isEditing, expenses])
   );
 
+  const onChangeDate = (event: DateTimePickerEvent, selectedDate?: Date) => {
+    if (Platform.OS === 'android') setShowDatePicker(false);
+    if (selectedDate) setDate(selectedDate);
+  };
+
   const handleSave = async () => {
     try {
-      if (!category) {
-        throw new ValidationError(VALIDATION_ERRORS.REQUIRED_FIELD('Category'));
-      }
-
       const amountNum = parseFloat(amountStr);
       if (!amountNum || amountNum < 1 || amountNum > 10000) {
         throw new ValidationError(VALIDATION_ERRORS.AMOUNT_OUT_OF_BOUNDS(1, 10000));
       }
 
-      if (!dateStr?.trim()) {
-        throw new ValidationError(VALIDATION_ERRORS.INVALID_DATE);
-      }
+      const expenseData = {
+        userId: auth.currentUser?.uid || 'UNKNOWN',
+        amount: amountNum,
+        category,
+        date: date.toISOString().split('T')[0],
+        note: note.trim(),
+      };
 
       if (isEditing && typeof params.id === 'string') {
-        await updateExpense(params.id, {
-          amount: amountNum,
-          category,
-          date: dateStr,
-        });
+        await updateExpense(params.id, expenseData);
         Alert.alert(UI_MESSAGES.TITLES.SUCCESS, UI_MESSAGES.SUCCESS.EXPENSE_UPDATED);
       } else {
-        await addExpense({
-          userId: auth.currentUser?.uid || 'UNKNOWN',
-          amount: amountNum,
-          category,
-          date: dateStr,
-        }); 
+        await addExpense(expenseData);
       }
       
       // Clear ID parameter
@@ -90,19 +92,24 @@ export default function AddEditScreen() {
   return (
     <ThemeView screenType="mainTabs" style={globalStyles.container}>
       <ScrollView contentContainerStyle={globalStyles.scrollContent}>
-        <ThemeText type="title" style={styles.title}>
+        <ThemeText type="title" style={styles.headerTitle}>
           {isEditing ? 'Edit Expense' : 'Add New Expense'}
         </ThemeText>
 
-        <ThemeInput
-          placeholder="Amount (e.g. 15.50)"
-          value={amountStr}
-          onChangeText={setAmountStr}
-          keyboardType="decimal-pad"
-        />
-
-        <View style={styles.categoryContainer}>
-          <ThemeText style={styles.categoryLabel}>Category:</ThemeText>
+        <View style={styles.whiteCard}>
+          <ThemeText style={styles.inputLabel}>AMOUNT</ThemeText>
+          <View style={styles.amountRow}>
+            <ThemeText style={styles.currencySymbol}>$</ThemeText>
+            <ThemeInput
+              placeholder="0.00"
+              value={amountStr}
+              onChangeText={setAmountStr}
+              keyboardType="decimal-pad"
+              style={styles.amountInput}
+            />
+          </View>
+          
+          <ThemeText style={styles.inputLabel}>CATEGORY</ThemeText>
           <View style={styles.buttonRow}>
             {Object.values(ExpenseCategory).map(cat => (
               <ThemeButton
@@ -114,40 +121,88 @@ export default function AddEditScreen() {
               />
             ))}
           </View>
-        </View>
 
-        <ThemeInput
-          placeholder="Date (YYYY-MM-DD)"
-          value={dateStr}
-          onChangeText={setDateStr}
-        />
+          <ThemeText style={styles.inputLabel}>DATE</ThemeText>
+          <TouchableOpacity style={styles.dateSelector} onPress={() => setShowDatePicker(true)}>
+            <ThemeText style={styles.dateValue}>{date.toLocaleDateString('en-GB')}</ThemeText>
+          </TouchableOpacity>
 
-        <ThemeButton
-          title={isEditing ? 'Update Expense' : 'Save Expense'}
-          onPress={handleSave}
-          loading={isLoading}
-        />
+          {showDatePicker && (
+            <DateTimePicker
+              value={date}
+              mode="date"
+              display={Platform.OS === 'ios' ? 'inline' : 'default'}
+              maximumDate={new Date()}
+              onChange={onChangeDate}
+            />
+          )}
 
-        {isEditing && (
-          <ThemeButton
-            title="Cancel"
-            variant="secondary"
-            onPress={() => {
-              router.setParams({ id: '' });
-              router.push('/(tabs)/history');
-            }}
-            style={{ marginTop: 10 }}
+          <ThemeText style={styles.inputLabel}>NOTE</ThemeText>
+          <ThemeInput
+            placeholder="What was this for?"
+            value={note}
+            onChangeText={setNote}
+            multiline
+            style={styles.noteInput}
           />
-        )}
+
+          <ThemeButton
+            title={isEditing ? 'Update Expense' : 'Save Expense'}
+            onPress={handleSave}
+            loading={isLoading}
+          />
+
+          {isEditing && (
+            <ThemeButton
+              title="Cancel"
+              variant="secondary"
+              onPress={() => {
+                router.setParams({ id: '' });
+                router.push('/(tabs)/history');
+              }}
+              style={{ marginTop: 10 }}
+            />
+          )}
+        </View>
       </ScrollView>
     </ThemeView>
   );
 }
 
 const styles = StyleSheet.create({
-  title: { color: '#FFF', marginBottom: 30, textAlign: 'center' },
-  categoryContainer: { marginBottom: 20 },
-  categoryLabel: { color: '#FFF', marginBottom: 10, fontWeight: '600' },
-  buttonRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
-  catBtn: { width: 'auto', marginVertical: 0, marginBottom: 10 }
+  container: { flex: 1, backgroundColor: '#840A18' },
+  scrollContent: { padding: 20, paddingTop: 40, paddingBottom: 60 },
+  headerTitle: { color: '#FFF', fontSize: 32, fontWeight: 'bold', marginBottom: 30, textAlign: 'left' },
+  
+  whiteCard: {
+    backgroundColor: '#FFF',
+    borderRadius: 35,
+    padding: 25,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 15,
+    elevation: 5
+  },
+
+  inputLabel: { color: '#B2BABB', fontSize: 11, fontWeight: '900', marginBottom: 10, letterSpacing: 1.5 },
+  
+  amountRow: { flexDirection: 'row', alignItems: 'center', marginBottom: 15, borderBottomWidth: 1, borderBottomColor: '#EEE', width: '100%' },
+  currencySymbol: { fontSize: 35, height: 50, lineHeight: 50, includeFontPadding: false, fontWeight: 'bold', color: '#1A1A1A', marginRight: 8, alignSelf: 'center' },
+  amountInput: { backgroundColor: 'transparent', borderWidth: 0, fontSize: 30, fontWeight: 'bold', color: '#1A1A1A', height: 50,paddingTop:10, width: 200, paddingHorizontal: 0, paddingVertical: 0, textAlignVertical: 'center' },
+  buttonRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: 20 },
+  catBtn: { width: 'auto', paddingHorizontal: 15, marginVertical: 0 },
+
+  catScroll: { marginBottom: 25 },
+  catChip: { paddingHorizontal: 20, paddingVertical: 10, borderRadius: 20, backgroundColor: '#F8F9FA', marginRight: 10, borderWidth: 1, borderColor: '#EEE' },
+  catChipSelected: { backgroundColor: '#840A18', borderColor: '#840A18' },
+  catText: { color: '#999', fontWeight: 'bold', fontSize: 13 },
+  catTextSelected: { color: '#FFF' },
+
+  dateSelector: { backgroundColor: '#F8F9FA', padding: 18, borderRadius: 15, marginBottom: 25, borderWidth: 1, borderColor: '#EEE' },
+  dateValue: { color: '#1A1A1A', fontSize: 16, fontWeight: '600' },
+
+  noteInput: { backgroundColor: '#F8F9FA', borderRadius: 15, padding: 15, fontSize: 16, color: '#1A1A1A', minHeight: 80, marginBottom: 30, borderBottomWidth: 0 },
+
+  saveBtn: { backgroundColor: '#840A18', borderRadius: 25, height: 55, marginTop: 10 },
+  cancelLink: { color: '#840A18', textAlign: 'center', fontWeight: 'bold', fontSize: 16 }
 });
