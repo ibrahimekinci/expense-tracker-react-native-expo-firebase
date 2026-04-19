@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { StyleSheet, View, Alert, TouchableOpacity, Switch, ScrollView } from 'react-native';
+import { StyleSheet, View, Alert, TouchableOpacity, ScrollView } from 'react-native';
 import { useRouter, useFocusEffect } from 'expo-router';
 import { ThemeView } from '../../components/ThemeView';
 import { ThemeText } from '../../components/ThemeText';
@@ -15,9 +15,6 @@ export default function ProfileScreen() {
 
   const [displayName, setDisplayName] = useState('N/A');
   const [email, setEmail] = useState('N/A');
-
-  const [remindersEnabled, setRemindersEnabled] = useState(false);
-  const [budgetAlertsEnabled, setBudgetAlertsEnabled] = useState(true);
 
   useFocusEffect(
     useCallback(() => {
@@ -56,9 +53,7 @@ export default function ProfileScreen() {
                 <View style={styles.avatarPlaceholder}>
                   <Ionicons name="person-outline" size={60} color="#840A18" />
                 </View>
-                <TouchableOpacity style={styles.editIconBadge}>
-                  <Ionicons name="pencil" size={14} color="#FFF" />
-                </TouchableOpacity>
+
               </View>
               
               <ThemeText style={styles.userName}>{displayName.toUpperCase()}</ThemeText>
@@ -81,39 +76,6 @@ export default function ProfileScreen() {
                 <ThemeText style={styles.infoLabel}>EMAIL</ThemeText>
                 <ThemeText style={styles.infoValue}>{email}</ThemeText>
                 <View style={styles.underline} />
-              </View>
-
-            <View style={styles.infoRow}>
-              <ThemeText style={styles.infoLabel}>PASSWORD</ThemeText>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 5 }}>
-                <ThemeText style={styles.infoValue}>*************</ThemeText>
-                <Ionicons name="lock-closed-outline" size={18} color="rgba(255,255,255,0.4)" />
-              </View>
-              <View style={styles.underline} />
-            </View>
-            </View>
-
-            <View style={[styles.card, { marginTop: 20 }]}>
-              <ThemeText style={styles.cardTitle}>Notification Settings</ThemeText>
-              
-              <View style={styles.settingRow}>
-                <ThemeText style={styles.settingText}>Daily Expense Reminder</ThemeText>
-                <Switch 
-                  value={remindersEnabled} 
-                  onValueChange={setRemindersEnabled}
-                  trackColor={{ false: "#767577", true: "#840A18" }}
-                  thumbColor={remindersEnabled ? "#FFF" : "#f4f3f4"}
-                />
-              </View>
-
-              <View style={styles.settingRow}>
-                <ThemeText style={styles.settingText}>Budget Threshold Alerts</ThemeText>
-                <Switch 
-                  value={budgetAlertsEnabled} 
-                  onValueChange={setBudgetAlertsEnabled}
-                  trackColor={{ false: "#767577", true: "#840A18" }}
-                  thumbColor={budgetAlertsEnabled ? "#FFF" : "#f4f3f4"}
-                />
               </View>
             </View>
 
@@ -147,7 +109,7 @@ export default function ProfileScreen() {
 
 const styles = StyleSheet.create({
   header: { alignItems: 'center', marginTop: 40, marginBottom: 30 },
-  avatarContainer: { position: 'relative', marginBottom: 15 },
+  avatarContainer: { marginBottom: 15 },
   avatarPlaceholder: {
     width: 120,
     height: 120,
@@ -158,38 +120,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#EEE'
   },
-  editIconBadge: {
-    position: 'absolute',
-    bottom: -5,
-    right: -5,
-    backgroundColor: '#4CAF50',
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 2,
-    borderColor: '#FFF'
-  },
+
   userName: { fontSize: 24, fontWeight: 'bold', color: '#FFF', letterSpacing: 1 },
   userEmail: { fontSize: 14, color: 'rgba(255,255,255,0.7)', marginTop: 4 },
-  settingRow: { 
-    flexDirection: 'row', 
-    justifyContent: 'space-between', 
-    alignItems: 'center', 
-    marginBottom: 15 
-  },
-  settingText: { color: '#FFF', fontSize: 16 },
-  passwordCard: {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 20,
-    padding: 20,
-    marginHorizontal: 20,
-    marginTop: 20,
-  },
-  passwordLabel: { fontSize: 10, color: 'rgba(255,255,255,0.5)', fontWeight: 'bold' },
-  passwordValue: { fontSize: 16, color: '#FFF', marginTop: 5 },
-  
   card: {
     backgroundColor: 'rgba(255, 255, 255, 0.1)', 
     borderRadius: 20,

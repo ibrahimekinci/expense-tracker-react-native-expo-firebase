@@ -1,11 +1,10 @@
-import React, { useEffect, useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { StyleSheet, View, Text, ScrollView, RefreshControl, useColorScheme} from 'react-native';
 import { useFocusEffect } from 'expo-router';
 import { ThemeView } from '../../components/ThemeView';
 import { ThemeText } from '../../components/ThemeText';
 import { useExpenseDb } from '../../hooks/useExpenseDb';
 import { useFirebaseAuth } from '../../hooks/useFirebaseAuth';
-import { ExpenseCategory } from '../../interfaces/ExpenseCategory';
 import { globalStyles } from '../../constants/globalStyles';
 import { PieChart } from "react-native-gifted-charts";
 
@@ -111,7 +110,6 @@ export default function DashboardScreen() {
 
 const styles = StyleSheet.create({
   welcomeText: { color: 'rgba(255, 255, 255, 0.7)', fontSize: 40, fontWeight: 'bold', marginBottom: 20 },
-  headerTitle: { color: '#FFF', marginBottom: 20 },
   summaryCard: {
     backgroundColor: '#FFFFFF',
     padding: 24,

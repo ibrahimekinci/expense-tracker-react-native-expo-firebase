@@ -14,6 +14,4 @@ export const VALIDATION_ERRORS = {
   INVALID_PASSWORD: "Password must be > 8 characters.",
   REQUIRED_FULL_NAME: "Full Name is required.",
   AMOUNT_OUT_OF_BOUNDS: (min: number, max: number) => `Expense amount must be between $${min} and $${max}.`,
-  REQUIRED_FIELD: (fieldName: string) => `The ${fieldName} field is required to proceed.`,
-  INVALID_DATE: "Please enter a valid date (YYYY-MM-DD)."
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, ScrollView, Alert, Platform, TouchableOpacity } from 'react-native';
 import { useLocalSearchParams, useRouter, useFocusEffect } from 'expo-router';
 import { ThemeView } from '../../components/ThemeView';
@@ -170,8 +170,6 @@ export default function AddEditScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#840A18' },
-  scrollContent: { padding: 20, paddingTop: 40, paddingBottom: 60 },
   headerTitle: { color: '#FFF', fontSize: 32, fontWeight: 'bold', marginBottom: 30, textAlign: 'left' },
   
   whiteCard: {
@@ -191,18 +189,8 @@ const styles = StyleSheet.create({
   amountInput: { backgroundColor: 'transparent', borderWidth: 0, fontSize: 30, fontWeight: 'bold', color: '#1A1A1A', height: 50,paddingTop:10, width: 200, paddingHorizontal: 0, paddingVertical: 0, textAlignVertical: 'center' },
   buttonRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: 20 },
   catBtn: { width: 'auto', paddingHorizontal: 15, marginVertical: 0 },
-
-  catScroll: { marginBottom: 25 },
-  catChip: { paddingHorizontal: 20, paddingVertical: 10, borderRadius: 20, backgroundColor: '#F8F9FA', marginRight: 10, borderWidth: 1, borderColor: '#EEE' },
-  catChipSelected: { backgroundColor: '#840A18', borderColor: '#840A18' },
-  catText: { color: '#999', fontWeight: 'bold', fontSize: 13 },
-  catTextSelected: { color: '#FFF' },
-
   dateSelector: { backgroundColor: '#F8F9FA', padding: 18, borderRadius: 15, marginBottom: 25, borderWidth: 1, borderColor: '#EEE' },
   dateValue: { color: '#1A1A1A', fontSize: 16, fontWeight: '600' },
 
   noteInput: { backgroundColor: '#F8F9FA', borderRadius: 15, padding: 15, fontSize: 16, color: '#1A1A1A', minHeight: 80, marginBottom: 30, borderBottomWidth: 0 },
-
-  saveBtn: { backgroundColor: '#840A18', borderRadius: 25, height: 55, marginTop: 10 },
-  cancelLink: { color: '#840A18', textAlign: 'center', fontWeight: 'bold', fontSize: 16 }
 });

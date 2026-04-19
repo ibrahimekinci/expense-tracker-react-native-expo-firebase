@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import { StyleSheet, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useFirebaseAuth } from '../hooks/useFirebaseAuth';
 import { ThemeView } from '../components/ThemeView';

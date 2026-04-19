@@ -5,7 +5,6 @@ import { ThemeView } from '../../components/ThemeView';
 import { ThemeText } from '../../components/ThemeText';
 import { ThemeButton } from '../../components/ThemeButton';
 import { useExpenseDb } from '../../hooks/useExpenseDb';
-import { UI_MESSAGES } from '../../constants/uiMessages';
 import { globalStyles } from '../../constants/globalStyles';
 import { Ionicons } from '@expo/vector-icons';
 
